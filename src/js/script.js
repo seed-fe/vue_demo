@@ -40,7 +40,10 @@ var app5 = new Vue({
 var app6 = new Vue({
     el: '#app-6',
     data: {
-        message: 'Hello Vue!'
+        message1: 'Hello Vue!',
+        message2: 'Hi Vue.',
+        age: 20,
+        message3: ''
     }
 })
 Vue.component('todo-item', {
@@ -99,5 +102,79 @@ var vm2 = new Vue({
         toggleLoginType: function() {
             this.loginType = this.loginType === 'username' ? 'email' : 'username'
         }
+    }
+})
+var vm3 = new Vue({
+    el: '#condition1',
+    data: {
+        ok: false
+    }
+})
+// v-for块有对父作用域属性的完全访问权限
+var list = new Vue({
+    el: '#listRender',
+    data: {
+        parentMessage: 'Parent',
+        items: [
+            { message: 'Foo' },
+            { message: 'Bar' }
+        ]
+    }
+})
+var on = new Vue({
+    el: '#on',
+    data: {
+        counter: 0
+    }
+})
+var method = new Vue({
+    el: '#method',
+    data: {
+        name: 'Vue.js'
+    },
+    methods: {
+        greet: function(event) {
+            alert('Hello ' + this.name + '!')
+            if (event) {
+                alert(event.target.tagName)
+            }
+        }
+    }
+})
+// method.greet()
+new Vue({
+    el: '#inline',
+    methods: {
+        say: function(message) {
+            alert(message)
+        },
+        warn: function(message, event) {
+            if (event) {
+                event.preventDefault()
+            }
+            alert(message)
+        }
+    }
+})
+var inputs = new Vue({
+    el: '#input1',
+    data: {
+        message: '',
+        checked: false,
+        checkedNames: [],
+        picked: '',
+        selected: '',
+        selectedM: [],
+        selectedVFor: 'A',
+        options: [
+            { text: 'One', value: 'A' },
+            { text: 'Two', value: 'B' },
+            { text: 'Three', value: 'C' }
+        ],
+        toggle: '',
+        a: 'x',
+        b: 'y',
+        pickValue: '',
+        selectedVBind: ''
     }
 })

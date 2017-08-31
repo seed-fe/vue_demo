@@ -15,7 +15,7 @@
 </head>
 <body>
 	<div id="app">
-		{{message}}
+		{{ message }}
 	</div>
 	<div id="app-2">
 		<span v-bind:title="message">
@@ -28,17 +28,25 @@
 	<div id="app-4">
 		<ol>
 			<li v-for="todo in todos">
-				{{todo.text}}
+				{{ todo.text }}
 			</li>
 		</ol>
 	</div>
 	<div id="app-5">
-		<p>{{message}}</p>
+		<p>{{ message }}</p>
 		<button v-on:click="reverseMessage">逆转消息</button>
 	</div>
     <div id="app-6">
-        <p>{{message}}</p>
-        <input v-model="message">
+        <p>{{ message1 }}</p>
+        <!-- 默认情况下v-model在 input 事件中同步输入框的值与数据 -->
+        <input v-model="message1">
+        <p>{{ message2 }}</p>
+        <!-- .lazy修饰符可以转变为在change事件中同步，回车才会同步 -->
+        <input v-model.lazy="message2">
+        <p>{{ age }}</p>
+        <input type="number" v-model.number="age">
+        <p>{{ message3 }}</p>
+        <input v-model.trim="message3">
     </div>
     <div id="app-7">
         <ol>
@@ -63,13 +71,101 @@
     <div id="condition">
         <template v-if="loginType === 'username'">
             <label for="">Username</label>
-            <input type="text" placeholder="Enter your username">
+            <input type="text" placeholder="Enter your username" key="username-input">
         </template>
         <template v-else>
             <label for="">Email</label>
-            <input type="text" placeholder="Enter your email address">
+            <input type="text" placeholder="Enter your email address" key="email-input">
         </template>
         <button v-on:click="toggleLoginType">Toggle login type</button>
+    </div>
+    <!-- v-show -->
+    <div id="condition1">
+        <h1 v-show="ok">Hello!</h1>
+    </div>
+    <!-- 
+        v-if是真正的条件渲染，切换时会对dom进行销毁和重建，有更高的切换开销，适用于运行时条件不太可能改变的情况
+        v-show不管初始条件，元素总是会被渲染，只是切换display属性，初始渲染开销高，适于非常频繁的切换
+    -->
+    <!-- 列表渲染 -->
+    <ul id="listRender">
+        <li v-for="(item, index) in items">
+            {{ parentMessage }} - {{ index }} - {{ item.message }}
+        </li>
+    </ul>
+    <!-- 事件监听 -->
+    <div id="on">
+        <button v-on:click="counter += 1">增加1</button>
+        <p>这个按钮被点击了{{ counter }}次</p>
+    </div>
+    <!-- 方法事件处理 -->
+    <div id="method">
+        <button v-on:click="greet">Greet</button>
+    </div>
+    <!-- 内联处理器方法 -->
+    <div id="inline">
+        <button v-on:click="say('hi')">Say hi</button>
+        <button v-on:click="say('what')">Say what</button>
+        <!-- 在内联语句处理器中访问原生DOM事件 -->
+        <button v-on:click="warn('Form cannot be submitted yet.', $event)">
+            Submit
+        </button>
+    </div>
+    <!-- 表单控件绑定 -->
+    <div id="input1">
+        <input type="text" placeholder="edit me" v-model="message">
+        <p>Message is: {{ message }}</p>
+        <input type="checkbox" id="checkbox" v-model="checked">
+        <label for="checkbox">{{ checked }}</label>
+        <br>
+        <input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
+        <label for="jack">Jack</label>
+        <input type="checkbox" id="john" value="John" v-model="checkedNames">
+        <label for="john">John</label>
+        <input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
+        <label for="mike">Mike</label>
+        <br>
+        <span>Checked names: {{ checkedNames }}</span>
+        <br>
+        <input type="radio" id="one" value="One" v-model="picked">
+        <label for="one">One</label>
+        <br>
+        <input type="radio" id="two" value="Two" v-model="picked">
+        <label for="two">Two</label>
+        <br>
+        <span>Picked: {{ picked }}</span>
+        <br>
+        <select v-model="selected">
+            <option disabled value="">请选择</option>
+            <option>A</option>
+            <option>B</option>
+            <option>C</option>
+        </select>
+        <span>Selected: {{ selected }}</span>
+        <br>
+        <select v-model="selectedM" multiple style="width: 50px;">
+            <option>A</option>
+            <option>B</option>
+            <option>C</option>
+        </select>
+        <span>Selected: {{ selectedM }}</span>
+        <br>
+        <select v-model="selectedVFor">
+            <option v-for="option in options" v-bind:value="option.value">
+                {{ option.text }}
+            </option>
+        </select>
+        <span>Selected: {{ selectedVFor }}</span>
+        <br>
+        <!-- 绑定value到Vue实例的一个动态属性上 -->
+        <input type="checkbox" v-model="toggle" v-bind:true-value="a" v-bind:false-value="b">
+        <br>
+        <input type="radio" v-model="pickValue" v-bind:value="a">
+        <br>
+        <select v-model="selectedVBind">
+            <!-- 内联对象字面量 -->
+            <option v-bind:value="{ number: 123 }">123</option>
+        </select>
     </div>
     <script src="https://unpkg.com/vue"></script>
     <script src="js/script.js"></script>
