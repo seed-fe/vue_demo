@@ -178,3 +178,26 @@ var inputs = new Vue({
         selectedVBind: ''
     }
 })
+/* 组件 注册组件 → 创建根实例 */
+// 全局注册组件
+Vue.component('my-component', {
+    template: '<div>A custom component!</div>'
+})
+// 创建根实例
+new Vue({
+    el: '#component'
+})
+// 局部注册
+var Child = {
+    template: '<div>Locally registered component.</div>'
+}
+new Vue({
+    el: '#localComponent',
+    components: {
+        // <local-component>将只在父模板#localComponent中可用
+        'local-component': Child
+    }
+})
+new Vue({
+    el: '#globalComponent'
+})

@@ -46,6 +46,7 @@
         <p>{{ age }}</p>
         <input type="number" v-model.number="age">
         <p>{{ message3 }}</p>
+        <!-- .trim 修饰符可以自动过滤用户输入的首尾空格 -->
         <input v-model.trim="message3">
     </div>
     <div id="app-7">
@@ -166,6 +167,18 @@
             <!-- 内联对象字面量 -->
             <option v-bind:value="{ number: 123 }">123</option>
         </select>
+    </div>
+    <!-- 组件 -->
+    <!-- 全局注册组件 -->
+    <div id="component">
+        <my-component></my-component>
+    </div>
+    <!-- 局部注册组件 -->
+    <div id="localComponent">
+        <local-component></local-component>
+    </div>
+    <div id="globalComponent">
+        <my-component></my-component>
     </div>
     <script src="https://unpkg.com/vue"></script>
     <script src="js/script.js"></script>
